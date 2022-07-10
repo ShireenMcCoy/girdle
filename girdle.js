@@ -4,7 +4,7 @@ $(function(){
 });
 
 var welcomeMessage = "Weclcome to Girdle, another Wordle knockoff!\n\n" +
-"The secret word wraps clockwise in a circle.\n" + 
+"The secret word wraps clockwise in a circle.\n\n" + 
 "The word can start at any point in the circle, but you must start entering letters from the top square.\n\n"
 + "Good luck!";
 var globalVars = {};
