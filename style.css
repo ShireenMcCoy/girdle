@@ -3,6 +3,10 @@
     position: fixed;
     bottom: 0; 
   }
+  html,
+  body {
+    overflow: hidden;
+  }
 }
 
 :root {
@@ -16,10 +20,6 @@
   --keyboard-height: 400px;
 }
 
-address {
-  visibility: none;
-}
-
 
 html,
 body {
@@ -27,7 +27,7 @@ body {
   font-weight: bold;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 
@@ -36,8 +36,6 @@ body {
   max-width: 500px;
   margin: 0 auto;
   height: 100%;
-  /* display: flex;
-  flex-direction: column; */
 }
 
 
@@ -61,12 +59,10 @@ h1{
   padding: 0;
   align-items: center;
   justify-content: center; 
-  /* color: var(--cirdle_dark_grey); */
 }
 
 #notifications {
   text-align: center;
-  /* border-style: 1px solid black; */
 }
 
 #italic{
@@ -96,7 +92,6 @@ h1{
 }
 
 #inner-board{
-  /* position: relative; */
   margin: auto;
   border-radius: 50%;
   width: 120px;
@@ -175,7 +170,7 @@ button.lg {
 }
 
 #backspace {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 #enter-btn {
@@ -192,7 +187,6 @@ button.lg {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /* background-color: yellow; */
   width: 100%;
 }
 
