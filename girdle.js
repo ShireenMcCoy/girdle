@@ -1,6 +1,7 @@
 $(function(){
     generateSecretWord();
     alert(welcomeMessage);
+    alert(globalVars.secretWord);
 });
 
 var welcomeMessage = "Weclcome to Girdle, another Wordle knockoff!\n\n" +
@@ -43,7 +44,7 @@ function keyOrButtonPressed(key) {
 } 
 
 
-function handleBackspace(){ // what to do if user pushes backspace key
+function handleBackspace(){ 
     if (tileIndex > 0) {
         tileIndex = tileIndex - 1;
         $(`#${tileClasses[tileIndex]}`).css("border-color", "var(--cirdle_light_grey)");
@@ -60,33 +61,14 @@ function submitWord(){
         return;
     } else if (wordGuess == globalVars.secretWord){
         winGame();
-        //moreTries = false;
     } else { // if wordGuess is the correct length but it's not equal to the secretWord:
-        let secretWord = globalVars.secretWord;
-        for (let i = 0; i < 5; i++) {
-            if (wordGuess[i] == secretWord[i]){
-                $(`#${tileClasses[i]}`).css("color", "white");
-                $(`#${tileClasses[i]}`).css("background-color", "var(--cirdle_green)");
-                $(`#${tileClasses[i]}`).css("border-style", "none");
-                changeKeyColor(wordGuess[i], "correct");
-            } else if(secretWord.includes(wordGuess[i])){
-                $(`#${tileClasses[i]}`).css("color", "white");
-                $(`#${tileClasses[i]}`).css("background-color", "var(--cirdle_yellow)").css("border", "none");
-                changeKeyColor(wordGuess[i], "somewhere else");
-            } else { // if this particular letter isn't in the secret word:
-                $(`#${tileClasses[i]}`).css("color", "white");
-                $(`#${tileClasses[i]}`).css("background-color", "var(--cirdle_dark_grey)").css("border", "none");
-                changeKeyColor(wordGuess[i], "not in word");
-            }
-        }
-
+        handleWrongGuess();
         if(nthTry < 8){
             newRound();
         } else {
             endGame();
         }
-    }
-    
+    } 
 }
 
 
@@ -98,6 +80,63 @@ function handleLetterPress(key){ // what to do if user pushes a letter key
         tileIndex++;
     } 
 }  
+
+
+function newRound(){ //prepare game board for next round
+    nthTry++;
+    circleNum = nthTry +1;
+    tileClasses = {0:"tile-" + circleNum + "-1", 1:"tile-" + circleNum + "-2", 2: "tile-" + circleNum + "-3", 3: "tile-" + circleNum + "-4", 4:"tile-" + circleNum + "-5"};
+    wordGuess = "";
+    tileIndex = 0;
+}
+
+
+function endGame(){
+    $("#notifications").html(`${globalVars.secretWordPretty}`);
+    moreTries = false;
+}
+
+
+function winGame(){
+    moreTries = false;
+    for (let i = 0; i < 5; i++) {
+        $(`#${tileClasses[i]}`).css("color", "white");
+        $(`#${tileClasses[i]}`).css("background-color", "var(--cirdle_green)");
+        $(`#${tileClasses[i]}`).css("border-style", "none");
+    }
+    $("#notifications").html("you got it!");
+}
+
+
+function getScrambled(secretWord){
+    let startPos = globalVars.startPos;
+    let scrambled = "";
+    prettyIndex = startPos;
+    for (let i = 0; i < 5; i++){
+        if(prettyIndex > 4){
+            prettyIndex = 0;
+        } 
+        scrambled = scrambled + secretWord[prettyIndex];
+        prettyIndex = prettyIndex + 1;
+    }
+    return scrambled;
+}
+
+function handleWrongGuess() {
+    let secretWord = globalVars.secretWord;
+    for (let i = 0; i < 5; i++) {
+        if (wordGuess[i] == secretWord[i]){
+            changeTileColor(i, "var(--cirdle_green)");
+            changeKeyColor(wordGuess[i], "correct");   
+        } else if(secretWord.includes(wordGuess[i])){
+            changeTileColor(i, "var(--cirdle_yellow)");
+            changeKeyColor(wordGuess[i], "somewhere else");
+        } else { // if this particular letter isn't in the secret word:
+            changeTileColor(i, "var(--cirdle_dark_grey)");
+            changeKeyColor(wordGuess[i], "not in word");
+        }
+    }    
+}
 
 
 function changeKeyColor(letter, placement){
@@ -130,53 +169,11 @@ function changeKeyColor(letter, placement){
     }  
 }
 
-
-function newRound(){ //prepare game board for next round
-    nthTry++;
-    circleNum = nthTry +1;
-    tileClasses = {0:"tile-" + circleNum + "-1", 1:"tile-" + circleNum + "-2", 2: "tile-" + circleNum + "-3", 3: "tile-" + circleNum + "-4", 4:"tile-" + circleNum + "-5"};
-    wordGuess = "";
-    tileIndex = 0;
-    //resetTiles();
-    //$("#notifications").html("");
-}
-
-
-function endGame(){
-    //("out of turns");
-   /*  $("#notifications").html(`The secret word is: ${globalVars.secretWordPretty}<br>starting at the ${ordinals[globalVars.firstTileShuffled]} square`
-    ); */
-    $("#notifications").html(`The secret word is: ${globalVars.secretWordPretty}`);
-    moreTries = false;
-}
-
-
-    function winGame(){
-    moreTries = false;
-    for (let i = 0; i < 5; i++) {
-        $(`#${tileClasses[i]}`).css("color", "white");
-        $(`#${tileClasses[i]}`).css("background-color", "var(--cirdle_green)");
-        $(`#${tileClasses[i]}`).css("border-style", "none");
-    }
-    $("#notifications").html("you got it!");
-}
-
-
-function getScrambled(secretWord){
-    let startPos = globalVars.startPos;
-    let scrambled = "";
-    prettyIndex = startPos;
-    for (let i = 0; i < 5; i++){
-        if(prettyIndex > 4){
-            prettyIndex = 0;
-        } 
-        scrambled = scrambled + secretWord[prettyIndex];
-        prettyIndex = prettyIndex + 1;
-    }
-    return scrambled;
-
-}
-
+function changeTileColor(i, tileColor){
+    $(`#${tileClasses[i]}`).css("color", "white");
+    $(`#${tileClasses[i]}`).css("background-color", tileColor);
+    $(`#${tileClasses[i]}`).css("border-style", "none");
+} 
 
 
 
