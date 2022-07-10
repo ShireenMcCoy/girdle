@@ -1,7 +1,7 @@
 $(function(){
     generateSecretWord();
     alert(welcomeMessage);
-    alert(globalVars.secretWord);
+    //alert(globalVars.secretWord);
 });
 
 var welcomeMessage = "Weclcome to Girdle, another Wordle knockoff!\n\n" +
