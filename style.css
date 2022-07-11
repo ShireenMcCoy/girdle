@@ -5,6 +5,10 @@
     position: fixed;
     bottom: 0; 
   }
+  #backspace {
+  font-size: 1.4rem;
+}
+
 }
 
 html,
@@ -170,7 +174,7 @@ button.lg {
 }
 
 #backspace {
-  font-size: 0.7rem;
+  font-size: 1rem;
 }
 
 #enter-btn {

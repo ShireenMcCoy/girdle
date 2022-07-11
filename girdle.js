@@ -104,7 +104,6 @@ function winGame(){
         changeTileColor(i, "var(--cirdle_green)");
     }
     alert("you got it!");
-    //$("#notifications").html("you got it!");
 }
 
 
@@ -148,6 +147,7 @@ function handleWrongGuess() {
                     let letterIndex = letterIndexes[ndex];
                      if(wordGuess[letterIndex] !== secretWord[letterIndex]){ // if user guess is not a match at this position
                         changeTileColor(i, "var(--cirdle_yellow)");
+                        changeKeyColor(wordGuess[i], "somewhere else");
                         alreadyYellow.push(letter);
                     } else { 
                         // if user correctly guessed all positions of the letter, turn tile grey.
