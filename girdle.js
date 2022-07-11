@@ -1,5 +1,8 @@
 $(function(){
     generateSecretWord();
+    let keyboardHeight = $("#visual-keyboard").height();
+    let headerHeight = $("#girdleHeader ").height();
+    $("#ui").css(`height`, `calc(100% - ${headerHeight}px - ${keyboardHeight}px)`);
     alert(welcomeMessage);
 });
 
@@ -93,7 +96,7 @@ function newRound(){ //prepare game board for next round
 
 
 function endGame(){
-    $("#notifications").html(`${globalVars.secretWordPretty}`);
+    alert(globalVars.secretWordPretty);
     moreTries = false;
 }
 
