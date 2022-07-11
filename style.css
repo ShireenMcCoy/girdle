@@ -9,6 +9,7 @@
   font-size: 1.4rem;
 }
 
+
 }
 
 html,
@@ -25,6 +26,7 @@ body {
   --game-max-width: 500px;
   --header-height: 0px;
   --keyboard-height: 400px;
+  --browser_color: #787c7f;
 }
 
 
