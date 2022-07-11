@@ -1,7 +1,6 @@
 $(function(){
     generateSecretWord();
     alert(welcomeMessage);
-    //alert(globalVars.secretWord);
 });
 
 var welcomeMessage = "Weclcome to Girdle, another Wordle knockoff!\n\n" +
@@ -15,11 +14,13 @@ let ordinals = {1: "second", 2: "third", 3: "fourth", 4:"fifth", 5: "first"}
 
 function generateSecretWord(){
     let secretWord = words[Math.floor(Math.random() * words.length)];
+    secretWord = secretWord.toUpperCase()
+
     globalVars.startPos = Math.floor(1 + 5 * Math.random()) - 1;
     globalVars.firstTileShuffled = Math.abs(5 - globalVars.startPos);
-    secretWord = secretWord.toUpperCase()
     globalVars.secretWordPretty = secretWord;
-    globalVars.secretWord = getScrambled(secretWord);   
+    globalVars.secretWord = getScrambled(secretWord);  
+    globalVars.secretWordCharsArray = globalVars.secretWord.split('');
 }
 
 let nthTry = 0;
@@ -36,7 +37,7 @@ function keyOrButtonPressed(key) {
         if (key == 'Backspace') {
             handleBackspace();
         } else if (key == 'Enter') {
-            submitWord(); 
+            handleEnter(); 
         } else {
             handleLetterPress(key);
         }
@@ -55,7 +56,7 @@ function handleBackspace(){
     document.getElementById(tileClasses[tileIndex]).innerHTML = '';
 }
 
-function submitWord(){
+function handleEnter(){
     if(wordGuess.length < 5){
         alert("too short");
         return;
@@ -100,11 +101,10 @@ function endGame(){
 function winGame(){
     moreTries = false;
     for (let i = 0; i < 5; i++) {
-        $(`#${tileClasses[i]}`).css("color", "white");
-        $(`#${tileClasses[i]}`).css("background-color", "var(--cirdle_green)");
-        $(`#${tileClasses[i]}`).css("border-style", "none");
+        changeTileColor(i, "var(--cirdle_green)");
     }
-    $("#notifications").html("you got it!");
+    alert("you got it!");
+    //$("#notifications").html("you got it!");
 }
 
 
@@ -124,13 +124,37 @@ function getScrambled(secretWord){
 
 function handleWrongGuess() {
     let secretWord = globalVars.secretWord;
+    let alreadyYellow = [];
+    // for each tile in the circle:
     for (let i = 0; i < 5; i++) {
+        // if user guess at this position is correct
         if (wordGuess[i] == secretWord[i]){
             changeTileColor(i, "var(--cirdle_green)");
-            changeKeyColor(wordGuess[i], "correct");   
-        } else if(secretWord.includes(wordGuess[i])){
-            changeTileColor(i, "var(--cirdle_yellow)");
-            changeKeyColor(wordGuess[i], "somewhere else");
+            changeKeyColor(wordGuess[i], "correct"); 
+        
+        // if letter isn't at the position the user put it, 
+        // but exists at least one other place in the secret word:  
+        } else if(secretWord.includes(wordGuess[i])){ 
+            let letter = wordGuess[i];
+            // we don't want duplicate yellow tiles for the same letter in the same circle
+            if(alreadyYellow.includes(letter)){
+                changeTileColor(i, "var(--cirdle_dark_grey)");
+            } else { // if we don't already have a yellow tile for this letter in this circle
+                let letterIndexes = getAllIndexes(globalVars.secretWordCharsArray, letter);
+                let numInstances = letterIndexes.length;
+                // Iterate over all positions of this letter in the secret word.
+                // If user missed any of them, turn the tile yellow. 
+                 for(let ndex = 0;  ndex < numInstances; ndex++){
+                    let letterIndex = letterIndexes[ndex];
+                     if(wordGuess[letterIndex] !== secretWord[letterIndex]){ // if user guess is not a match at this position
+                        changeTileColor(i, "var(--cirdle_yellow)");
+                        alreadyYellow.push(letter);
+                    } else { 
+                        // if user correctly guessed all positions of the letter, turn tile grey.
+                        changeTileColor(i, "var(--cirdle_dark_grey)");
+                    }
+                 }
+            }
         } else { // if this particular letter isn't in the secret word:
             changeTileColor(i, "var(--cirdle_dark_grey)");
             changeKeyColor(wordGuess[i], "not in word");
@@ -174,6 +198,15 @@ function changeTileColor(i, tileColor){
     $(`#${tileClasses[i]}`).css("background-color", tileColor);
     $(`#${tileClasses[i]}`).css("border-style", "none");
 } 
+
+function getAllIndexes(arr, val) {
+    var indexes = [], i = -1;
+    while ((i = arr.indexOf(val, i+1)) != -1){
+        indexes.push(i);
+    }
+    return indexes;
+}
+
 
 
 
