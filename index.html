@@ -12,8 +12,10 @@
   </head>
   <body>
     <header id="girdleHeader">
-      <div id="girdleLogo">
-        Girdle
+      <div id="girdleLogoDiv">
+        <!-- <img src="src/images/girdle-logo.svg" style="height: 65%; width: auto; object-fit: contain" alt="Girdle"> -->
+        <img src="src/images/girdle-logo.svg" alt="Girdle" id="girdleLogoImg">
+
       </div>
     </header>
     <div id="ui">
@@ -136,7 +138,7 @@
           <button onclick="keyOrButtonPressed('L');">L</button>
         </div>
       </div>
-      <div>
+      <div id="bottomKeyRow">
         <button class="lg" id="enter-btn" onclick="keyOrButtonPressed('Enter');">enter</button>
         <button onclick="keyOrButtonPressed('Z');">Z</button>
         <button onclick="keyOrButtonPressed('X');">X</button>

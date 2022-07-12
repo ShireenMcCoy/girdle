@@ -46,6 +46,20 @@ color: black;
 border-bottom: 1px solid #d3dbda;;
 }
 
+#girdleLogoDiv{
+  /* position: relative; */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#girdleLogoImg {
+  display: block;
+  height: 65%; 
+  width: auto; 
+  object-fit: contain;
+}
 
 #ui {
   width: 100%;
@@ -70,8 +84,6 @@ h1{
   padding: 0;
   align-items: center;
   justify-content: center; 
-
-  /* just added */
   flex-basis: 0;
 }
 
@@ -88,7 +100,6 @@ h1{
   text-align: center;
   padding: 0;
   max-width: 400px;
-  /* just added */
   flex-shrink: 1;
 }
 
@@ -184,7 +195,6 @@ button.lg {
 
 #visual-keyboard {
   text-align: center;
-  padding: 0;
   padding-left: 3px;
   margin: 0 -6 0 0;
   width: 100%;
