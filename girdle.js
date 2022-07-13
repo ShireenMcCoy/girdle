@@ -6,6 +6,7 @@ $(function(){
     alert(welcomeMessage);
 });
 
+
 var welcomeMessage = "Weclcome to Girdle, another Wordle knockoff!\n\n" +
 "The secret word wraps clockwise in a circle.\n\n" + 
 "The word can start at any point in the circle, but you must start entering letters from the top square.\n\n"
@@ -59,9 +60,13 @@ function handleBackspace(){
     document.getElementById(tileClasses[tileIndex]).innerHTML = '';
 }
 
+
 function handleEnter(){
     if(wordGuess.length < 5){
-        alert("too short");
+        addAnimation("tile-shake");
+        setTimeout(function() {
+            removeAnimation("tile-shake");
+        }, 200);
         return;
     } else if (wordGuess == globalVars.secretWord){
         winGame();
@@ -74,6 +79,7 @@ function handleEnter(){
         }
     } 
 }
+
 
 
 function handleLetterPress(key){ // what to do if user pushes a letter key
@@ -211,6 +217,21 @@ function getAllIndexes(arr, val) {
 }
 
 
+function addAnimation(animationClassName){
+    let selectorString = "";
+    for (i = 0; i<5; i++) {
+        selectorString = selectorString + "#"  + tileClasses[i] + ", ";
+    }
+    selectorString = selectorString.slice(0, -2) 
+    $(selectorString).addClass(animationClassName);
+}
 
 
-
+function removeAnimation(animationClassName){
+    let selectorString = "";
+    for (i = 0; i<5; i++) {
+        selectorString = selectorString + "#"  + tileClasses[i] + ", ";
+    }
+    selectorString = selectorString.slice(0, -2) 
+    $(selectorString).removeClass(animationClassName);
+}

@@ -1,7 +1,7 @@
 @media only screen and (max-width: 500px) {
   #visual-keyboard  {
     position: fixed;
-    bottom: 0; 
+    padding-bottom: 0px;
   }
 }
 
@@ -47,7 +47,6 @@ border-bottom: 1px solid #d3dbda;;
 }
 
 #girdleLogoDiv{
-  /* position: relative; */
   height: 50px;
   display: flex;
   align-items: center;
@@ -114,6 +113,7 @@ h1{
   height: 120px;
   border: 4px dotted var(--cirdle_grey);
 }
+
 
 
 .tile {
@@ -203,6 +203,7 @@ button.lg {
   -ms-user-select: none;
   user-select: none;
   width: 100%;
+  padding-bottom: 5px
 }
 
 #visual-keyboard div {
@@ -253,6 +254,18 @@ div button {
 }
 
 
+/* ANIMATIONS  ***************************************/
+
+@keyframes shakeTiles {
+  0% {left: calc(50% - 30px);}
+  50% {left: calc(50% - 15px);}
+  100% {left: calc(50% - 30px);}
+}
+.tile-shake {
+  animation-name: shakeTiles;
+  animation-duration: 26ms;
+  animation-iteration-count: 5;
+}
 
 
 
