@@ -237,8 +237,7 @@ function flipTile(tileId){
     $(tileId).addClass("tile-flip");
 }
 
-
-  function togglePopup(popupText, containerId) {
+function togglePopup(popupText, containerId) {
     var popup = document.getElementById(containerId);
     $(popup).html(popupText);
     popup.classList.toggle("show");
