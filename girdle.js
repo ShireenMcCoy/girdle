@@ -3,18 +3,15 @@ $(function(){
     let keyboardHeight = $("#visual-keyboard").height();
     let headerHeight = $("#girdleHeader ").height();
     $("#ui").css(`height`, `calc(100% - ${headerHeight}px - ${keyboardHeight}px)`);
-    alert(welcomeMessage);
+    $("#weclomeText").click(function(){
+        $("#weclomeText").toggle();
+      });
+      //alert(globalVars.secretWord);
 });
 
-
-var welcomeMessage = "Weclcome to Girdle, another Wordle knockoff!\n\n" +
-"The secret word wraps clockwise in a circle.\n\n" + 
-"The word can start at any point in the circle, but you must start entering letters from the top square.\n\n"
-+ "Good luck!";
 var globalVars = {};
 
 let words = ["apple", "charm", "plank", "sieve", "azure", "glued", "spoke", "yacht", "theme", "speak"];
-let ordinals = {1: "second", 2: "third", 3: "fourth", 4:"fifth", 5: "first"}
 
 function generateSecretWord(){
     let secretWord = words[Math.floor(Math.random() * words.length)];
@@ -48,7 +45,6 @@ function keyOrButtonPressed(key) {
     }
 } 
 
-
 function handleBackspace(){ 
     if (tileIndex > 0) {
         tileIndex = tileIndex - 1;
@@ -81,7 +77,6 @@ function handleEnter(){
 }
 
 
-
 function handleLetterPress(key){ // what to do if user pushes a letter key
     if(tileIndex < 5){ 
         wordGuess += key;
@@ -102,8 +97,8 @@ function newRound(){ //prepare game board for next round
 
 
 function endGame(){
-    alert(globalVars.secretWordPretty);
     moreTries = false;
+    togglePopup(globalVars.secretWordPretty, "secretWord");
 }
 
 
@@ -112,7 +107,7 @@ function winGame(){
     for (let i = 0; i < 5; i++) {
         changeTileColor(i, "var(--cirdle_green)");
     }
-    alert("you got it!");
+    //alert("you got it!");
 }
 
 
@@ -129,6 +124,8 @@ function getScrambled(secretWord){
     }
     return scrambled;
 }
+
+
 
 function handleWrongGuess() {
     let secretWord = globalVars.secretWord;
@@ -232,6 +229,19 @@ function removeAnimation(animationClassName){
     for (i = 0; i<5; i++) {
         selectorString = selectorString + "#"  + tileClasses[i] + ", ";
     }
-    selectorString = selectorString.slice(0, -2) 
+    selectorString = selectorString.slice(0, -2);
     $(selectorString).removeClass(animationClassName);
 }
+
+function flipTile(tileId){
+    $(tileId).addClass("tile-flip");
+}
+
+
+  function togglePopup(popupText, containerId) {
+    var popup = document.getElementById(containerId);
+    $(popup).html(popupText);
+    popup.classList.toggle("show");
+  }
+
+  
