@@ -5,7 +5,7 @@ $(function(){
     $("#ui").css(`height`, `calc(100% - ${headerHeight}px - ${keyboardHeight}px)`);
     $("#weclomeText").click(function(){
         $("#weclomeText").toggle();
-      });
+      });     
 });
 
 var globalVars = {};
@@ -36,9 +36,7 @@ let yellowKeys = [];
 let greyKeys = [];
 
 function keyOrButtonPressed(key) {
-    /* $("#transparency-overlay").addClass("fadeOutBackground");  
-    return; */
-    if(moreTries == true){
+   if(moreTries == true){
         if (key == 'Backspace') {
             handleBackspace();
         } else if (key == 'Enter') {
@@ -103,6 +101,10 @@ function newRound(){ //prepare game board for next round
 function endGame(){
     moreTries = false;
     togglePopup(globalVars.secretWordPretty, "secretWord");
+    let startingIndex = globalVars.firstTileShuffled;
+    let selector = "#"  + tileClasses[startingIndex];
+    // give starting tile of word a yellow border so user knows where word starts
+    $(selector).css("box-sizing", "content-box").css("border-width", "4px").css("border-style", "dashed").css("border-color", "#ffd859");
 }
 
 
