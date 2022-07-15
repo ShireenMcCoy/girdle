@@ -6,7 +6,6 @@ $(function(){
     $("#weclomeText").click(function(){
         $("#weclomeText").toggle();
       });
-     alert(globalVars.secretWord);
 });
 
 var globalVars = {};
