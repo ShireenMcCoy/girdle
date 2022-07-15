@@ -5,7 +5,7 @@ $(function(){
     $("#ui").css(`height`, `calc(100% - ${headerHeight}px - ${keyboardHeight}px)`);
     $("#weclomeText").click(function(){
         $("#weclomeText").toggle();
-      });     
+    }); 
 });
 
 var globalVars = {};
@@ -102,6 +102,9 @@ function endGame(){
     moreTries = false;
     togglePopup(globalVars.secretWordPretty, "secretWord");
     let startingIndex = globalVars.firstTileShuffled;
+    if(startingIndex == 5){
+        startingIndex = 0;
+    }
     let selector = "#"  + tileClasses[startingIndex];
     // give starting tile of word a yellow border so user knows where word starts
     $(selector).css("box-sizing", "content-box").css("border-width", "4px").css("border-style", "dashed").css("border-color", "#ffd859");
