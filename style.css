@@ -251,6 +251,9 @@ div button {
 }
 
 
+
+
+
 /* ANIMATIONS & POPUPS  ***************************************/
 
 @keyframes shakeTiles {
@@ -321,16 +324,15 @@ div button {
   animation: fadeIn 1s;
 }
 
-/* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
   from {opacity: 0;} 
   to {opacity: 1;}
 }
-
 @keyframes fadeIn {
   from {opacity: 0;}
-  to {opacity:1 ;}
+  to {opacity: 0.8 ;}
 }
+
 
 .popup .welcomeTextClass {
   visibility: show;
@@ -380,6 +382,22 @@ div button {
   font-size: 25px;
   font-weight: 200;
 }
+
+@keyframes jumpForJoy {
+  0% {top: 0px}
+  100% {top: -10px;}
+  /* 100% {top: 0px;} */
+}
+.joy-jump {
+  animation-name: jumpForJoy;
+  animation-duration: .5s;
+  animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  animation-fill-mode: initial;
+}
+
+
+
 
 
 

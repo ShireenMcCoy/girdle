@@ -6,7 +6,7 @@ $(function(){
     $("#weclomeText").click(function(){
         $("#weclomeText").toggle();
       });
-      //alert(globalVars.secretWord);
+     alert(globalVars.secretWord);
 });
 
 var globalVars = {};
@@ -34,6 +34,8 @@ let yellowKeys = [];
 let greyKeys = [];
 
 function keyOrButtonPressed(key) {
+    /* $("#transparency-overlay").addClass("fadeOutBackground");  
+    return; */
     if(moreTries == true){
         if (key == 'Backspace') {
             handleBackspace();
@@ -105,11 +107,13 @@ function endGame(){
 function winGame(){
     moreTries = false;
     for (let i = 0; i < 5; i++) {
-        changeTileColor(i, "var(--cirdle_green)");
+        changeTileColor(i, "var(--cirdle_green)");  
     }
-    //alert("you got it!");
+    doHappyDance();
+    setTimeout(() => {togglePopup(globalVars.secretWordPretty, "secretWord")}, 2200
+     );
+    
 }
-
 
 function getScrambled(secretWord){
     let startPos = globalVars.startPos;
@@ -136,12 +140,10 @@ function handleWrongGuess() {
         if (wordGuess[i] == secretWord[i]){
             changeTileColor(i, "var(--cirdle_green)");
             changeKeyColor(wordGuess[i], "correct"); 
-        
         // if letter isn't at the position the user put it, 
         // but exists at least one other place in the secret word:  
         } else if(secretWord.includes(wordGuess[i])){ 
             let letter = wordGuess[i];
-            // we don't want duplicate yellow tiles for the same letter in the same circle
             if(alreadyYellow.includes(letter)){
                 changeTileColor(i, "var(--cirdle_dark_grey)");
             } else { // if we don't already have a yellow tile for this letter in this circle
@@ -233,9 +235,7 @@ function removeAnimation(animationClassName){
     $(selectorString).removeClass(animationClassName);
 }
 
-function flipTile(tileId){
-    $(tileId).addClass("tile-flip");
-}
+
 
 function togglePopup(popupText, containerId) {
     var popup = document.getElementById(containerId);
@@ -243,4 +243,24 @@ function togglePopup(popupText, containerId) {
     popup.classList.toggle("show");
   }
 
-  
+
+  function doHappyDance(){
+    if(globalVars.firstTileShuffled == 5){
+        globalVars.firstTileShuffled = 0;
+    }
+    startingIndex = globalVars.firstTileShuffled;
+    let joyJumpLength = 500; // in milliseconds
+    for (let i = 0; i < 5; i++){
+        let index = startingIndex + i;
+        if(index > 4){
+            index = Math.abs(index - 5);
+        }
+        
+        let selector = "#"  + tileClasses[index];
+        let timeoutLength = ((i+1) * joyJumpLength / 2)
+        let timeoutFunction = () => {
+            return $(selector).addClass("joy-jump");
+        };
+        setTimeout(timeoutFunction, timeoutLength);
+    }
+  }
