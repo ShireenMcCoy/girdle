@@ -6,6 +6,7 @@ $(function(){
     $("#weclomeText").click(function(){
         $("#weclomeText").toggle();
     }); 
+    document.addEventListener("keyup", handlePhysicalKeyPress);
 });
 
 var globalVars = {};
@@ -46,6 +47,19 @@ function keyOrButtonPressed(key) {
         }
     }
 } 
+
+function handlePhysicalKeyPress(e){
+    if(moreTries == true){
+        if(e.code == "Backspace"){
+            handleBackspace();
+        } else if (e.code == "Enter"){
+            handleEnter()
+        } else if ("KeyA" <= e.code && e.code <= "KeyZ"){
+            let key = e.code[3]
+            handleLetterPress(key);
+        }        
+    }
+}
 
 function handleBackspace(){ 
     if (tileIndex > 0) {
