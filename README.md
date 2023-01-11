@@ -6,6 +6,9 @@ The word can start at any point in the circle, but you must start entering lette
 
 You have 9 chances to guess the word, and you're allowed to enter non-valid words.
 
+Link to the game: 
+https://shireenmccoy.github.io/girdle/
+
 <br>
 
 <img src="src/images/girdle-screenshot.JPG" alt="Girdle screenshot" style="width:500px;"/>
